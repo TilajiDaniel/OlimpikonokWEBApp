@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Sportolók</h1>
+    <table class="table table-striped">
+        <thead>
+    <tr>
+        <th>Név</th>
+        <th>Neme</th>
+        <th>Születési dátum</th>
+        <th>Sportág</th>
+        <th>Érmek száma</th>
+        <th>Kép</th>
+        <th>módosítás</th>
+        <th>törlés</th>
+    </tr>
+        </thead>
+        <tbody>
+            @foreach (Sportolo sportolo in Model)
+            {
+                string nem = sportolo.Neme == true ? "férfi" : "nő";
+                <tr>
+                    <td>@sportolo.Nev</td>
+                    <td>@nem</td>
+                    <td>@sportolo.SzulDatum</td>
+                    <td>@sportolo.Sportag.Megnevezes</td>
+                    <td>@sportolo.Ermek</td>
+                    <td><a asp-area="" asp-controller="Home" asp-action="KepMegjelenites" asp-route-id="@sportolo.Id"><img src="@Program.ImageConverter(sportolo.IndexKep)" style="height:50px;" /></a></td>
+                    <td>
+                        <img src="~/images/pen.svg" alt="módosítás" />
+                    </td>
+                    <td>
+                           <img src="~/images/trash.svg" alt="törlés" />
+                    </td>
+                </tr>
+            }
+            </tbody>
+</table>
+</div>
