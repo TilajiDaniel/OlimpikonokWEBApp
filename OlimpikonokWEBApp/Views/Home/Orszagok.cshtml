@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "Országok";
+}
+<h1>@ViewData["Title"]</h1>
+<div class="text-center">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Név</th>
+                <th>Népesség</th>
+                <th>Főváros</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Orszag orszag in Model)
+            {
+                <tr>
+                    <td>@orszag.Nev</td>
+                    <td>@orszag.Nepesseg</td>
+                    <td>@orszag.Fovaros</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
