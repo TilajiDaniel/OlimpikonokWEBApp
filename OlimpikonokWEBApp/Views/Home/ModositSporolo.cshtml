@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Modositas";
+    Sportolo modositott = new Sportolo()
+            {
+                Id = (Model as Sportolo).Id ,
+                IndexKep = (Model as Sportolo).IndexKep,
+                Kep = (Model as Sportolo).Kep
+            };
+}
+
+<div class="text-center">
+   <h1 class="">Hamarosan lesz modositas lehetőség</h1>
+   <form method="post" asp-area="" asp-controller="Home" asp-action="ModositasEredmenye">
+       <input type="hidden" name="Id" value="@(Model as Sportolo).Id"/>
+       <label for="nev">Név:</label>
+       <input type="hidden" name="nev" value="@(Model as Sportolo).Nev" />
+       <label for="neme">Neme:</label>
+       <select class="form-control" id="neme" name="neme">
+           @if(((Model as Sportolo).Neme) == true)
+           {
+            <option value="1" selected>Férfi</option>
+                <option value="0">Nő</option>
+            }
+            else
+            {
+                <option value="1">Férfi</option>
+                <option value="0" selected>Nő</option>
+            }
+        </select><br/>
+        <label for="szuldatum">Születési dátum:</label>
+        <input type="date" name="szulDatum" class="form-control" id="szuldatum" value="@(Model as
+        Sportolo).SzulDatum.ToString("yyyy-MM-dd")"/><br/>
+        <label class="form-control" type="number" name="ermekszama" value="@((Model as Sportolo).Ermek)"/><br/>
+        
+
+   </form>
+</div>

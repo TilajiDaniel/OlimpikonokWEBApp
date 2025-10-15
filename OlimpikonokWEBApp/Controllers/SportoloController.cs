@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AspNetCore;
+using Microsoft.EntityFrameworkCore;
 using OlimpikonokWEBApp.Models;
 
 namespace OlimpikonokWEBApp.Controllers
@@ -14,10 +15,11 @@ namespace OlimpikonokWEBApp.Controllers
                     List<Sportolo> sportolok = context.Sportolos.Include(s => s.Sportag).ToList();
                     return sportolok;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     List<Sportolo> hiba = new List<Sportolo>();
-                    Sportolo uj = new Sportolo() { 
+                    Sportolo uj = new Sportolo()
+                    {
                         Id = 0,
                         Nev = "Hiba az adatbázis elérésekor: " + ex.Message
                     };
@@ -25,7 +27,7 @@ namespace OlimpikonokWEBApp.Controllers
                 }
             }
         }
-        public Sportolo GetSportoloById(int id )
+        public Sportolo GetSportoloById(int id)
         {
             using (var context = new OlimpikonokContext())
             {
@@ -43,6 +45,37 @@ namespace OlimpikonokWEBApp.Controllers
                     };
                     return hiba;
                 }
+            }
+        }
+        public string PostSportolo(Sportolo modositSportolo)
+        {
+            using (var context = new OlimpikonokContext())
+            {
+                try
+                {
+                    if (modositSportolo != null)
+                    {
+                        Sportolo letezo = context.Sportolos.FirstOrDefault(s => s.Id == modositSportolo.Id);
+                        if (letezo != null)
+                        {
+                            context.Sportolos.Update(modositSportolo);
+                            return "Sikeresen módosítottuk az adatokat";
+                        }
+                        else
+                        {
+                            return "Nincs ilyen sporoló!";
+                        }
+                    }
+                    else
+                    {
+                        return "Üres objektumot kaptam, nem lehet módosítani!!!";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return $"Nem sikerult a modositas{ex.Message}";
+                }
+
             }
         }
     }

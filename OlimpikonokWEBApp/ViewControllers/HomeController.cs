@@ -17,6 +17,28 @@ namespace OlimpikonokWEBApp.Controllers
         {
             return View();
         }
+        public IActionResult UjSportolo()
+        {
+            return View();
+        }
+        public IActionResult ModositasEredmenye(Sportolo modositott)
+        {
+            if (modositott == null)
+            {
+                return View( "ModositasEredmenye", "Hiba, nincs modositando adat"   );
+            }
+            modositott.Nev = Request.Form["nev"].ToString();
+            modositott.Neme = Request.Form["neme"].ToString() =="1" ? true: false;
+            modositott.SzulDatum = Request.Form
+        }
+        public IActionResult ModositSporolo(int id)
+        {
+            return View(new SportoloController().GetSportoloById(id));
+        }
+        public IActionResult TorolSportolo(int id)
+        {
+            return View();
+        }
         public IActionResult Orszagok()
         {
             return View(new OrszagokController().GetOrszagok());
