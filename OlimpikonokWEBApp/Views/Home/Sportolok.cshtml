@@ -1,43 +1,40 @@
 ﻿@{
-    ViewData["Title"] = "Sporotlo";
+    ViewData["Title"] = "OlimpikonokWEBApp";
 }
 
 <div class="text-center">
     <h1 class="display-4">Sportolók</h1>
-    <div style="padding:10px">
-        <a asp-area="" asp-controller="Home" asp-action="UjSportolo" class="btn btn-primary">Új Sporotolo Felvétele</a>
+    <div style="padding: 10px;">
+        <a asp-area="" asp-controller="Home" asp-action="UjSportolo" class="btn btn-primary">Új sportoló felvétele</a>
     </div>
     <table class="table table-striped">
         <thead>
-    <tr>
-        <th>Név</th>
-        <th>Neme</th>
-        <th>Születési dátum</th>
-        <th>Sportág</th>
-        <th>Érmek száma</th>
-        <th>Kép</th>
-        <th>módosítás</th>
-        <th>törlés</th>
-    </tr>
+            <tr>
+                <th>Név</th>
+                <th>Neme</th>
+                <th>Születési dátum</th>
+                <th>Sportág</th>
+                <th>Érmek száma</th>
+                <th>Indexkép</th>
+                <th>Módosítás</th>
+                <th>Törlés</th>
+            </tr>
         </thead>
         <tbody>
             @foreach (Sportolo sportolo in Model)
             {
-                string nem = sportolo.Neme == true ? "férfi" : "nő";
+                string nem = sportolo.Neme ? "Férfi" : "Nő";
                 <tr>
                     <td>@sportolo.Nev</td>
                     <td>@nem</td>
                     <td>@sportolo.SzulDatum</td>
                     <td>@sportolo.Sportag.Megnevezes</td>
                     <td>@sportolo.Ermek</td>
-                    <td><a asp-area="" asp-controller="Home" asp-action="KepMegjelenites" asp-route-id="@sportolo.Id"><img
-                        src="@Program.ImageConverter(sportolo.IndexKep)" style="height:50px;" /></a></td>
-                        <td><a asp-area="" asp-controller="Home" asp-action="ModositSporolo" asp-route-id="@sportolo.Id"><img
-                            src="~/images/pen.svg" alt="módosítás"/></a></td>
-                        <td><a asp-area="" asp-controller="Home" asp-action="TorolSportolo" asp-route-id="@sportolo.Id"><img
-                            src="~/images/trash.svg" alt="törlés" /></a></td>
+                    <td><a asp-area="" asp-controller="Home" asp-action="NagyKep" asp-route-id="@sportolo.Id"><img src="@Program.ImageConverter(sportolo.IndexKep)" style="height: 50px;" /></a></td>
+                    <td><a asp-area="" asp-controller="Home" asp-action="ModositSportolo" asp-route-id="@sportolo.Id"><img src="/images/pencil.svg" /></a></td>
+                    <td><a asp-area="" asp-controller="Home" asp-action="TorolSportolo" asp-route-id="@sportolo.Id"><img src="/images/trash.svg" /></a></td>
+                    
                 </tr>
             }
-            </tbody>
-</table>
+        </tbody>
 </div>

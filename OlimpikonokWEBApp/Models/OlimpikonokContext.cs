@@ -46,9 +46,7 @@ public partial class OlimpikonokContext : DbContext
             entity.ToTable("sportag");
 
             entity.Property(e => e.Id).HasColumnType("int(11)");
-            entity.Property(e => e.Megnevezes)
-                .HasMaxLength(32)
-                .HasDefaultValueSql("'NULL'");
+            entity.Property(e => e.Megnevezes).HasMaxLength(32);
         });
 
         modelBuilder.Entity<Sportolo>(entity =>
@@ -59,42 +57,23 @@ public partial class OlimpikonokContext : DbContext
 
             entity.HasIndex(e => e.OrszagId, "OrszagId");
 
-            entity.HasIndex(e => e.SportagId, "SporagId");
+            entity.HasIndex(e => e.SportagId, "SportagId");
 
             entity.Property(e => e.Id).HasColumnType("int(11)");
-            entity.Property(e => e.Ermek)
-                .HasDefaultValueSql("'NULL'")
-                .HasColumnType("int(11)");
-            entity.Property(e => e.IndexKep)
-                .HasDefaultValueSql("'NULL'")
-                .HasColumnType("blob");
-            entity.Property(e => e.Kep)
-                .HasDefaultValueSql("'NULL'")
-                .HasColumnType("mediumblob");
-            entity.Property(e => e.Neme)
-                .HasDefaultValueSql("'NULL'")
-                .HasColumnName("NEme");
-            entity.Property(e => e.Nev)
-                .HasMaxLength(32)
-                .HasDefaultValueSql("'NULL'");
-            entity.Property(e => e.OrszagId)
-                .HasDefaultValueSql("'NULL'")
-                .HasColumnType("int(11)");
-            entity.Property(e => e.SportagId)
-                .HasDefaultValueSql("'NULL'")
-                .HasColumnType("int(11)");
-            entity.Property(e => e.SzulDatum)
-                .HasDefaultValueSql("'NULL'")
-                .HasColumnType("date");
+            entity.Property(e => e.Ermek).HasColumnType("int(11)");
+            entity.Property(e => e.IndexKep).HasColumnType("blob");
+            entity.Property(e => e.Kep).HasColumnType("mediumblob");
+            entity.Property(e => e.Nev).HasMaxLength(32);
+            entity.Property(e => e.OrszagId).HasColumnType("int(11)");
+            entity.Property(e => e.SportagId).HasColumnType("int(11)");
+            entity.Property(e => e.SzulDatum).HasColumnType("date");
 
             entity.HasOne(d => d.Orszag).WithMany(p => p.Sportolos)
                 .HasForeignKey(d => d.OrszagId)
-                .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("sportolo_ibfk_2");
 
             entity.HasOne(d => d.Sportag).WithMany(p => p.Sportolos)
                 .HasForeignKey(d => d.SportagId)
-                .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("sportolo_ibfk_1");
         });
 

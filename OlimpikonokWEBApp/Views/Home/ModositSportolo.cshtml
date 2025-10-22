@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "OlimpikonokWEBApp";
+    Sportolo adatok = TempData["sportoloData"] as Sportolo;
+    Sportolo modositott = new Sportolo()
+    {
+        Id = adatok.Id,
+        SzulDatum = adatok.SzulDatum,
+        OrszagId = adatok.OrszagId,
+        SportagId = adatok.SportagId,
+        IndexKep = adatok.IndexKep,
+        Kep = adatok.Kep
+    };
+
+}
+
+<div class="text-start">
+    <h1 class="display-4">Sportoló adatinak módosítása</h1>
+    <form method="post" asp-area="" asp-controller="Home" asp-action="ModositasEredmenye" asp-route-modositott="@modositott">
+        <fieldset>
+            <input type="text" name="Id" value="@(adatok.Id)"/>
+            <label for="nev">Név</label>
+            <input class="form-control" type="text" name="nev" value="@(adatok.Nev)" />
+            <br />
+            <label for="neme">Neme</label>
+            <select class="form-control" id="neme" name="neme" >
+                @if ((adatok.Neme))
+                {
+                    <option value="1" selected>Férfi</option>
+                    <option value="0">Nő</option>
+                }
+                else
+                {
+                    <option value="1">Férfi</option>
+                    <option value="0" selected>Nő</option>
+                }
+            </select><br />
+            <label for="szuldatum">Születési dátum</label>
+            <input type="date" name="szulDatum" class="form-control" id="szuldatum" value="@(adatok.SzulDatum.ToString("yyyy-MM-dd"))" />
+            <br />
+            <label for="ermekszama">Érmek száma</label>
+            <input class="form-control" type="number" id="ermekszama" name="ermekszama" value="@(adatok.Ermek)" />
+            <br />
+        </fieldset>
+        <input type="submit" value="Módosítás" class="btn btn-primary" />
+    </form>
+</div>

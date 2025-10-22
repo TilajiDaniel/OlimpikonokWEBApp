@@ -1,6 +1,6 @@
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using OlimpikonokWEBApp.Models;
-using System.Diagnostics;
 
 namespace OlimpikonokWEBApp.Controllers
 {
@@ -17,39 +17,45 @@ namespace OlimpikonokWEBApp.Controllers
         {
             return View();
         }
+
         public IActionResult UjSportolo()
         {
             return View();
         }
+
+        public IActionResult ModositSportolo(int id)
+        {
+            Sportolo sportolo = new SportoloController().GetSportoloById(id);
+            TempData["sportoloData"] = sportolo;
+            return View();
+        }
+
         public IActionResult ModositasEredmenye(Sportolo modositott)
         {
             if (modositott == null)
             {
-                return View( "ModositasEredmenye", "Hiba, nincs modositando adat"   );
+                return View("ModositasEredmenye", "Hiba, nincs módosítandó adat");
             }
+            modositott.Id = int.Parse(Request.Form["id"].ToString());
             modositott.Nev = Request.Form["nev"].ToString();
-            modositott.Neme = Request.Form["neme"].ToString() =="1" ? true: false;
-            modositott.SzulDatum = Request.Form
+            modositott.Neme = Request.Form["neme"].ToString() == "1" ? true : false;
+            modositott.SzulDatum = Request.Form["szuldatum"].ToString() != "" ? DateTime.Parse(Request.Form["szulDatum"].ToString()): DateTime.Now;
+            modositott.Ermek = int.Parse(Request.Form["ermekszama"].ToString());
+            return View("ModositasEredmenye", $"{modositott.ToString()}" + new SportoloController().PutSportolo(modositott) );
         }
-        public IActionResult ModositSporolo(int id)
-        {
-            return View(new SportoloController().GetSportoloById(id));
-        }
+
         public IActionResult TorolSportolo(int id)
         {
             return View();
-        }
-        public IActionResult Orszagok()
-        {
-            return View(new OrszagokController().GetOrszagok());
         }
         public IActionResult Sportolok()
         {
             return View(new SportoloController().GetSportolok());
         }
-        public IActionResult KepMegjelenites(int id)
+
+        public IActionResult NagyKep(int id)
         {
-            return View(new SportoloController().GetSportoloById(id));
+            return View(new SportoloController().GetSportoloDTOById(id));
         }
         public IActionResult Privacy()
         {
